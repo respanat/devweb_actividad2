@@ -90,11 +90,13 @@ public class UsuarioController extends HttpServlet {
     private void listarUsuarios(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Usuario> usuarios = usuarioService.obtenerTodosLosUsuarios();
         request.setAttribute("usuarios", usuarios); // Pasa la lista de usuarios a la vista
-        request.getRequestDispatcher("/Views/forms/usuarios/listar_todo.jsp").forward(request, response);
+        //request.getRequestDispatcher("/Views/forms/usuarios/listar_todo.jsp").forward(request, response);
+	request.getRequestDispatcher("/listar_todo.jsp").forward(request, response);
     }
 
     private void mostrarFormularioAgregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/Views/forms/usuarios/agregar.jsp").forward(request, response);
+        //request.getRequestDispatcher("/Views/forms/usuarios/agregar.jsp").forward(request, response);
+	request.getRequestDispatcher("/agregar.jsp").forward(request, response);
     }
 
     private void guardarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -112,7 +114,8 @@ public class UsuarioController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Usuario usuario = usuarioService.obtenerUsuarioPorId(id);
         request.setAttribute("usuario", usuario); // Pasa el usuario a la vista
-        request.getRequestDispatcher("/Views/forms/usuarios/editar.jsp").forward(request, response); // Necesitaremos crear este JSP
+        //request.getRequestDispatcher("/Views/forms/usuarios/editar.jsp").forward(request, response); // Necesitaremos crear este JSP
+	request.getRequestDispatcher("/editar.jsp").forward(request, response);
     }
 
     private void actualizarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -134,13 +137,15 @@ public class UsuarioController extends HttpServlet {
     }
 
     private void mostrarFormularioBuscar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/Views/forms/usuarios/buscar.jsp").forward(request, response);
+        //request.getRequestDispatcher("/Views/forms/usuarios/buscar.jsp").forward(request, response);
+	request.getRequestDispatcher("/buscar.jsp").forward(request, response);
     }
 
     private void buscarUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String criterio = request.getParameter("criterio");
         Usuario usuarioEncontrado = usuarioService.obtenerUsuarioPorUsername(criterio); // Ejemplo de búsqueda por username
         request.setAttribute("usuarioEncontrado", usuarioEncontrado);
-        request.getRequestDispatcher("/Views/forms/usuarios/buscar_resultado.jsp").forward(request, response); // Necesitaremos crear este JSP
+        //request.getRequestDispatcher("/Views/forms/usuarios/buscar_resultado.jsp").forward(request, response); // Necesitaremos crear este JSP
+	request.getRequestDispatcher("/buscar_resultado.jsp").forward(request, response);
     }
 }
