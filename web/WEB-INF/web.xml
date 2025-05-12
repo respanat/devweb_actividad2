@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.1" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_1.xsd">
-    <servlet>
-        <servlet-name>UsuarioController</servlet-name>
-        <servlet-class>Controllers.UsuarioController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UsuarioController</servlet-name>
-        <url-pattern>/UsuarioController</url-pattern>
-    </servlet-mapping>
+    <jsp-config>
+        <taglib>
+            <taglib-uri>jakarta.tags.core</taglib-uri>
+            <taglib-location>/WEB-INF/lib/jakarta.servlet.jsp.jstl-api-2.0.0.jar</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>jakarta.tags.fmt</taglib-uri>
+            <taglib-location>/WEB-INF/lib/org.glassfish.web.jakarta.servlet.jsp.jstl-impl-2.0.0.jar</taglib-location>
+        </taglib>
+    </jsp-config>
 </web-app>

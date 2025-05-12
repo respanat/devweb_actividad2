@@ -25,9 +25,14 @@ public class UsuarioService {
     }
 
     // Método para obtener todos los usuarios, invoca el método del repositorio
-    public List<Usuario> obtenerTodosLosUsuarios() {
+    /*public List<Usuario> obtenerTodosLosUsuarios() {
         return usuarioRepository.obtenerTodos();
-    }
+    }*/
+    public List<Usuario> obtenerTodosLosUsuarios() {
+    List<Usuario> usuarios = usuarioRepository.obtenerTodos();
+    System.out.println("UsuarioService - Número de usuarios obtenidos del repositorio: " + usuarios.size());
+    return usuarios;
+}
 
     // Método para actualizar la información de un usuario, invoca el método del repositorio
     public void actualizarUsuario(Usuario usuario) {
@@ -44,5 +49,20 @@ public class UsuarioService {
     // Método para obtener un usuario por su nombre de usuario, invoca el método del repositorio
     public Usuario obtenerUsuarioPorUsername(String username) {
         return usuarioRepository.obtenerPorUsername(username);
+    }
+    
+    public Usuario autenticarUsuario(String usernameOrEmail, String password) {
+        Usuario usuario = usuarioRepository.obtenerPorUsername(usernameOrEmail); // Buscar por username o email
+
+        if (usuario == null) {
+            return null; // Usuario no encontrado
+        }
+
+        // Verificar si la contraseña coincide
+        if (usuario.getPassword().equals(password)) {
+            return usuario; // Autenticación exitosa
+        } else {
+            return null; // Contraseña incorrecta
+        }
     }
 }

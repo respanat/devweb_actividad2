@@ -13,13 +13,14 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     private static final String JDBC_PASSWORD = "AbcdeUdeC";
 
     // Método para obtener una conexión a la base de datos
-    private Connection getConnection() throws SQLException {
+    //private Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
     }
 
     @Override
     public void crear(Usuario usuario) {
-        String sql = "INSERT INTO Usuario (username, password, nombre, email) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Usuarios (username, password, nombre, email) VALUES (?, ?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, usuario.getUsername());
@@ -34,7 +35,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     @Override
     public Usuario obtenerPorId(int id) {
-        String sql = "SELECT id, username, password, nombre, email FROM Usuario WHERE id = ?";
+        String sql = "SELECT id, username, password, nombre, email FROM Usuarios WHERE id = ?";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -49,8 +50,8 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     }
 
     @Override
-    public List<Usuario> obtenerTodos() {
-        String sql = "SELECT id, username, password, nombre, email FROM Usuario";
+    /*public List<Usuario> obtenerTodos() {
+        String sql = "SELECT id, username, password, nombre, email FROM Usuarios";
         List<Usuario> usuarios = new ArrayList<>();
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
@@ -62,11 +63,42 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
             e.printStackTrace();
         }
         return usuarios;
+    }*/
+    public List<Usuario> obtenerTodos() {
+    List<Usuario> usuarios = new ArrayList<>();
+    Connection conn = null;
+    Statement stmt = null;
+    ResultSet rs = null;
+    try {
+        conn = getConnection();
+        stmt = conn.createStatement();
+        String sql = "SELECT id, username, password, nombre, email FROM Usuarios";
+        rs = stmt.executeQuery(sql);
+        System.out.println("UsuarioRepositoryImpl - Consulta ejecutada."); // Añade esta línea
+        while (rs.next()) {
+            Usuario usuario = new Usuario();
+            usuario.setId(rs.getInt("id"));
+            usuario.setUsername(rs.getString("username"));
+            usuario.setPassword(rs.getString("password"));
+            usuario.setNombre(rs.getString("nombre"));
+            usuario.setEmail(rs.getString("email"));
+            usuarios.add(usuario);
+        }
+        System.out.println("UsuarioRepositoryImpl - Número de usuarios en la lista antes de retornar: " + usuarios.size()); // Añade esta línea
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        // Cierra los recursos
+        try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+        try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+        try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
     }
+    return usuarios;
+}
 
     @Override
     public void actualizar(Usuario usuario) {
-        String sql = "UPDATE Usuario SET username = ?, password = ?, nombre = ?, email = ? WHERE id = ?";
+        String sql = "UPDATE Usuarios SET username = ?, password = ?, nombre = ?, email = ? WHERE id = ?";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, usuario.getUsername());
@@ -82,7 +114,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     @Override
     public void eliminar(int id) {
-        String sql = "DELETE FROM Usuario WHERE id = ?";
+        String sql = "DELETE FROM Usuarios WHERE id = ?";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -94,7 +126,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     @Override
     public Usuario obtenerPorUsername(String username) {
-        String sql = "SELECT id, username, password, nombre, email FROM Usuario WHERE username = ?";
+        String sql = "SELECT id, username, password, nombre, email FROM Usuarios WHERE username = ?";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);

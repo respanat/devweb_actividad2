@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -51,6 +52,9 @@ public class UsuarioController extends HttpServlet {
                 case "buscar":
                     mostrarFormularioBuscar(request, response);
                     break;
+		case "login":
+                    mostrarFormularioLogin(request, response);
+                    break;
                 default:
                     // Si la acción no se reconoce, se puede mostrar un error
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -89,14 +93,13 @@ public class UsuarioController extends HttpServlet {
 
     private void listarUsuarios(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Usuario> usuarios = usuarioService.obtenerTodosLosUsuarios();
+	System.out.println("Número de usuarios obtenidos: " + usuarios.size());
         request.setAttribute("usuarios", usuarios); // Pasa la lista de usuarios a la vista
-        //request.getRequestDispatcher("/Views/forms/usuarios/listar_todo.jsp").forward(request, response);
-	request.getRequestDispatcher("/listar_todo.jsp").forward(request, response);
+        request.getRequestDispatcher("/Views/forms/usuarios/listar_todo.jsp").forward(request, response);
     }
 
     private void mostrarFormularioAgregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //request.getRequestDispatcher("/Views/forms/usuarios/agregar.jsp").forward(request, response);
-	request.getRequestDispatcher("/agregar.jsp").forward(request, response);
+        request.getRequestDispatcher("/Views/forms/usuarios/agregar.jsp").forward(request, response);
     }
 
     private void guardarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -114,8 +117,7 @@ public class UsuarioController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Usuario usuario = usuarioService.obtenerUsuarioPorId(id);
         request.setAttribute("usuario", usuario); // Pasa el usuario a la vista
-        //request.getRequestDispatcher("/Views/forms/usuarios/editar.jsp").forward(request, response); // Necesitaremos crear este JSP
-	request.getRequestDispatcher("/editar.jsp").forward(request, response);
+        request.getRequestDispatcher("/Views/forms/usuarios/editar.jsp").forward(request, response); // Necesitaremos crear este JSP
     }
 
     private void actualizarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -137,15 +139,31 @@ public class UsuarioController extends HttpServlet {
     }
 
     private void mostrarFormularioBuscar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //request.getRequestDispatcher("/Views/forms/usuarios/buscar.jsp").forward(request, response);
-	request.getRequestDispatcher("/buscar.jsp").forward(request, response);
+        request.getRequestDispatcher("/Views/forms/usuarios/buscar.jsp").forward(request, response);
     }
 
     private void buscarUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String criterio = request.getParameter("criterio");
         Usuario usuarioEncontrado = usuarioService.obtenerUsuarioPorUsername(criterio); // Ejemplo de búsqueda por username
         request.setAttribute("usuarioEncontrado", usuarioEncontrado);
-        //request.getRequestDispatcher("/Views/forms/usuarios/buscar_resultado.jsp").forward(request, response); // Necesitaremos crear este JSP
-	request.getRequestDispatcher("/buscar_resultado.jsp").forward(request, response);
+        request.getRequestDispatcher("/Views/forms/usuarios/buscar_resultado.jsp").forward(request, response); // Necesitaremos crear este JSP
+    }
+    private void mostrarFormularioLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/login.jsp").forward(request, response);
+    }
+    private void procesarLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String usernameOrEmail = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        Usuario usuario = usuarioService.autenticarUsuario(usernameOrEmail, password);
+
+        if (usuario != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("usuarioLogueado", usuario);
+            response.sendRedirect(request.getContextPath() + "/usuario/listar"); // Redirigimos a la lista para simplificar.
+        } else {
+            request.setAttribute("errorMessage", "Credenciales inválidas");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+        }
     }
 }
