@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
+    <title>Recordar Contraseña</title>
     <style>
         body {
             font-family: sans-serif;
@@ -15,12 +15,12 @@
             min-height: 100vh;
             margin: 0;
         }
-        .login-container {
+        .forgot-password-container {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 350px;
         }
         h2 {
             text-align: center;
@@ -35,7 +35,7 @@
             color: #555;
         }
         input[type="text"],
-        input[type="password"] {
+        input[type="email"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
@@ -43,7 +43,7 @@
             box-sizing: border-box;
         }
         button[type="submit"] {
-            background-color: #5cb85c;
+            background-color: #007bff;
             color: white;
             padding: 10px 15px;
             border: none;
@@ -52,51 +52,47 @@
             width: 100%;
         }
         button[type="submit"]:hover {
-            background-color: #4cae4c;
+            background-color: #0056b3;
         }
-        .error-message {
-            color: red;
+        .message {
             text-align: center;
-            margin-top: 10px;
+            margin-top: 15px;
+            color: green; /* O rojo para errores */
         }
-        .forgot-password {
+        .back-to-login {
             text-align: center;
             margin-top: 15px;
             font-size: 0.9em;
         }
-        .forgot-password a {
-            color: #007bff;
+        .back-to-login a {
+            color: #555;
             text-decoration: none;
         }
-        .forgot-password a:hover {
+        .back-to-login a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Iniciar Sesión</h2>
+    <div class="forgot-password-container">
+        <h2>¿Olvidaste tu Contraseña?</h2>
         <%
-            String errorMessage = (String) request.getAttribute("errorMessage");
-            if (errorMessage != null && !errorMessage.isEmpty()) {
+            String message = (String) request.getAttribute("message");
+            if (message != null && !message.isEmpty()) {
         %>
-            <p class="error-message"><%= errorMessage %></p>
+            <p class="message"><%= message %></p>
         <%
             }
         %>
-        <form action="<%= request.getContextPath() %>/usuario/login" method="post">
+        <form action="<%= request.getContextPath() %>/usuario/recordar_password" method="post">
             <div class="form-group">
-                <label for="username">Usuario:</label>
-                <input type="text" id="username" name="username" required>
+                <label for="identifier">Usuario o Correo Electrónico:</label>
+                <input type="text" id="identifier" name="identifier" required>
             </div>
-            <div class="form-group">
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Iniciar Sesión</button>
+            <button type="submit">Enviar Solicitud</button>
         </form>
-        <div class="forgot-password">
-            <a href="<%= request.getContextPath() %>/recordar_password">¿Olvidaste tu contraseña?</a>
+        <div class="back-to-login">
+            <a href="<%= request.getContextPath() %>/usuario/login">Volver a Iniciar Sesión</a>
         </div>
     </div>
 </body>

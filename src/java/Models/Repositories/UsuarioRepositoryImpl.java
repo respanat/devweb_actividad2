@@ -29,7 +29,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
             pstmt.setString(4, usuario.getEmail());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace(); // En un entorno real, se debería manejar la excepción de forma más robusta
+            e.printStackTrace();
         }
     }
 
@@ -50,20 +50,6 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     }
 
     @Override
-    /*public List<Usuario> obtenerTodos() {
-        String sql = "SELECT id, username, password, nombre, email FROM Usuarios";
-        List<Usuario> usuarios = new ArrayList<>();
-        try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                usuarios.add(new Usuario(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("nombre"), rs.getString("email")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return usuarios;
-    }*/
     public List<Usuario> obtenerTodos() {
     List<Usuario> usuarios = new ArrayList<>();
     Connection conn = null;
@@ -74,7 +60,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         stmt = conn.createStatement();
         String sql = "SELECT id, username, password, nombre, email FROM Usuarios";
         rs = stmt.executeQuery(sql);
-        System.out.println("UsuarioRepositoryImpl - Consulta ejecutada."); // Añade esta línea
+        System.out.println("UsuarioRepositoryImpl - Consulta ejecutada.");
         while (rs.next()) {
             Usuario usuario = new Usuario();
             usuario.setId(rs.getInt("id"));
@@ -84,7 +70,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
             usuario.setEmail(rs.getString("email"));
             usuarios.add(usuario);
         }
-        System.out.println("UsuarioRepositoryImpl - Número de usuarios en la lista antes de retornar: " + usuarios.size()); // Añade esta línea
+        System.out.println("UsuarioRepositoryImpl - Número de usuarios en la lista antes de retornar: " + usuarios.size());
     } catch (SQLException e) {
         e.printStackTrace();
     } finally {
@@ -138,5 +124,28 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Usuario obtenerPorEmail(String email) {
+        Usuario usuario = null;
+        String sql = "SELECT id, username, password, nombre, email FROM usuarios WHERE email = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, email);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                usuario = new Usuario(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("nombre"),
+                        rs.getString("email")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Log de errores
+        }
+        return usuario;
     }
 }

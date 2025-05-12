@@ -65,4 +65,14 @@ public class UsuarioService {
             return null; // Contraseña incorrecta
         }
     }
+
+    public Usuario iniciarRecordarPassword(String identifier) {
+        Usuario usuario = usuarioRepository.obtenerPorUsername(identifier);
+        if (usuario == null) {
+            usuario = usuarioRepository.obtenerPorEmail(identifier);
+        }
+        // En una aplicación real, aquí se enviaría un correo electrónico
+        // con un enlace para restablecer la contraseña.
+        return usuario; // Devolvemos el usuario encontrado (o null si no se encuentra)
+    }
 }

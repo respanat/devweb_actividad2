@@ -55,6 +55,9 @@ public class UsuarioController extends HttpServlet {
 		case "login":
                     mostrarFormularioLogin(request, response);
                     break;
+		case "recordar_password":
+                    mostrarFormularioRecordarPassword(request, response);
+                    break;
                 default:
                     // Si la acción no se reconoce, se puede mostrar un error
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -81,6 +84,12 @@ public class UsuarioController extends HttpServlet {
                     break;
                 case "buscar":
                     buscarUsuario(request, response);
+                    break;
+		case "login":
+	            procesarLogin(request, response);
+        	    break;
+		case "recordar_password":
+                    procesarRecordarPassword(request, response);
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -149,7 +158,7 @@ public class UsuarioController extends HttpServlet {
         request.getRequestDispatcher("/Views/forms/usuarios/buscar_resultado.jsp").forward(request, response); // Necesitaremos crear este JSP
     }
     private void mostrarFormularioLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
+        request.getRequestDispatcher("/Views/forms/usuarios/login.jsp").forward(request, response);
     }
     private void procesarLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String usernameOrEmail = request.getParameter("username");
@@ -163,7 +172,25 @@ public class UsuarioController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/usuario/listar"); // Redirigimos a la lista para simplificar.
         } else {
             request.setAttribute("errorMessage", "Credenciales inválidas");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/Views/forms/usuarios/login.jsp").forward(request, response);
         }
     }
+
+   private void mostrarFormularioRecordarPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/Views/forms/usuarios/recordar_password.jsp").forward(request, response);
+    }
+
+    private void procesarRecordarPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String identifier = request.getParameter("identifier");
+        Usuario usuarioEncontrado = usuarioService.iniciarRecordarPassword(identifier);
+
+        if (usuarioEncontrado != null) {
+            // En una aplicación real, aquí se generaría y enviaría un enlace
+            // para restablecer la contraseña al correo electrónico del usuario.
+            request.setAttribute("message", "Se ha enviado un enlace para restablecer la contraseña a tu correo electrónico (simulado).");
+        } else {
+            request.setAttribute("message", "No se encontró ningún usuario con ese nombre de usuario o correo electrónico.");
+        }
+        request.getRequestDispatcher("/Views/forms/usuarios/recordar_password.jsp").forward(request, response);
+    } 
 }

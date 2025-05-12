@@ -21,4 +21,9 @@ public interface UsuarioRepository {
 
     // Método para obtener un usuario por su nombre de usuario
     Usuario obtenerPorUsername(String username);
+
+    // Método para recordar la contraseña del usuario
+    Usuario obtenerPorEmail(String email);
+
+    
 }
