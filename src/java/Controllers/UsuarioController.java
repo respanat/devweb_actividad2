@@ -37,7 +37,7 @@ public class UsuarioController extends HttpServlet {
             String action = pathParts[0]; // La primera parte indica la acción
 
             switch (action) {
-                case "listar":
+                case "listar_todo":
                     listarUsuarios(request, response);
                     break;
                 case "agregar":
@@ -57,6 +57,12 @@ public class UsuarioController extends HttpServlet {
                     break;
 		case "recordar_password":
                     mostrarFormularioRecordarPassword(request, response);
+                    break;
+		case "listar": // Para mostrar los detalles del usuario logueado
+                    mostrarDetallesUsuario(request, response);
+                    break;
+                case "logout":
+                    cerrarSesion(request, response);
                     break;
                 default:
                     // Si la acción no se reconoce, se puede mostrar un error
@@ -160,20 +166,45 @@ public class UsuarioController extends HttpServlet {
     private void mostrarFormularioLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/Views/forms/usuarios/login.jsp").forward(request, response);
     }
+
     private void procesarLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String usernameOrEmail = request.getParameter("username");
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
+	String adminLogin = request.getParameter("adminLogin"); // Obtiene el valor del botón "Administrar"
 
-        Usuario usuario = usuarioService.autenticarUsuario(usernameOrEmail, password);
-
+	if (adminLogin != null && adminLogin.equals("true") && username.equals("admin") && password.equals("admin")) {
+            // Credenciales de administrador
+            response.sendRedirect(request.getContextPath() + "/usuario/listar_todo");
+        } else {
+            // Autenticación normal
+            Usuario usuario = usuarioService.autenticarUsuario(username, password);
         if (usuario != null) {
             HttpSession session = request.getSession();
             session.setAttribute("usuarioLogueado", usuario);
-            response.sendRedirect(request.getContextPath() + "/usuario/listar"); // Redirigimos a la lista para simplificar.
+            response.sendRedirect(request.getContextPath() + "/usuario/listar"); // Redirige a listar.jsp
         } else {
             request.setAttribute("errorMessage", "Credenciales inválidas");
             request.getRequestDispatcher("/Views/forms/usuarios/login.jsp").forward(request, response);
         }
+    }
+    }
+
+    private void mostrarDetallesUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
+        if (usuarioLogueado != null) {
+            request.getRequestDispatcher("/Views/forms/usuarios/listar.jsp").forward(request, response);
+        } else {
+            response.sendRedirect(request.getContextPath() + "/usuario/login"); // Si no hay usuario logueado, vuelve al login
+        }
+    }
+
+    private void cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession(false); // No crea una nueva sesión si no existe
+        if (session != null) {
+            session.invalidate(); // Invalida la sesión actual
+        }
+        response.sendRedirect(request.getContextPath() + "/usuario/login"); // Redirige a la página de inicio de sesión
     }
 
    private void mostrarFormularioRecordarPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

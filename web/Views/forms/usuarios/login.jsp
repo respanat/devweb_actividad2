@@ -71,6 +71,23 @@
         .forgot-password a:hover {
             text-decoration: underline;
         }
+	.admin-button {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .admin-button button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+        }
+        .admin-button button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -94,9 +111,12 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <button type="submit">Iniciar Sesión</button>
+	    <div class="admin-button">
+            <button type="submit" name="adminLogin" value="true">Administrar</button>
+            </div>
         </form>
         <div class="forgot-password">
-            <a href="<%= request.getContextPath() %>/recordar_password">¿Olvidaste tu contraseña?</a>
+            <a href="<%= request.getContextPath() %>/usuario/recordar_password">¿Olvidaste tu contraseña?</a>
         </div>
     </div>
 </body>
