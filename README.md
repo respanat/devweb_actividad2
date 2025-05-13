@@ -16,3 +16,4 @@ Despliegue normal de la aplicación:
 4. Hacer un "clean and build" para validar que no existen incoherencias funcionales
 5. Hacer Run
 6. Accesos de prueba: usuario::contraseña >> test0::test0  | admin::admin . Un usuario administrador para la gestión del CRUD.
+7. Entrada administración: Digitar Usuario y contraseña y dar clic en botón Administrar.
