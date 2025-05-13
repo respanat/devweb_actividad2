@@ -22,7 +22,9 @@ public class ComputadorController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        computadorService = new ComputadorService();
+        //computadorService = new ComputadorService();
+	computadorService = new ComputadorService(new Models.Repositories.ComputadorRepositoryImpl()); // Asegúrate de pasar la implementación
+    usuarioService = new UsuarioService(new UsuarioRepositoryImpl()); // Instancia UsuarioService aquí
     }
 
     @Override
@@ -91,6 +93,7 @@ public class ComputadorController extends HttpServlet {
     
     private void mostrarFormularioAgregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     List<Usuario> usuarios = usuarioService.obtenerTodosLosUsuarios();
+        System.out.println("Número de usuarios obtenidos: " + usuarios.size()); // Agrega esta línea
     request.setAttribute("usuarios", usuarios); // Pasa la lista de usuarios a la vista
     request.getRequestDispatcher("/Views/forms/computadores/agregar.jsp").forward(request, response);
 }
