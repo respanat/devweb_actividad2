@@ -2,6 +2,10 @@ package Controllers;
 
 import Models.Entities.Computador;
 import Models.Services.ComputadorService;
+import Models.Services.UsuarioService;
+import Models.Entities.Usuario;
+import Models.Repositories.UsuarioRepositoryImpl;
+import Models.Repositories.UsuarioRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,6 +18,7 @@ import java.util.List;
 public class ComputadorController extends HttpServlet {
 
     private ComputadorService computadorService;
+    private UsuarioService usuarioService;
 
     @Override
     public void init() throws ServletException {
@@ -80,9 +85,15 @@ public class ComputadorController extends HttpServlet {
         request.getRequestDispatcher("/Views/forms/computadores/listar_todo.jsp").forward(request, response);
     }
 
-    private void mostrarFormularioAgregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    /*private void mostrarFormularioAgregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/Views/forms/computadores/agregar.jsp").forward(request, response);
-    }
+    }*/
+    
+    private void mostrarFormularioAgregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    List<Usuario> usuarios = usuarioService.obtenerTodosLosUsuarios();
+    request.setAttribute("usuarios", usuarios); // Pasa la lista de usuarios a la vista
+    request.getRequestDispatcher("/Views/forms/computadores/agregar.jsp").forward(request, response);
+}
 
     private void guardarComputador(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String marca = request.getParameter("marca");

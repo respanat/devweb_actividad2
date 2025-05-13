@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,9 +63,15 @@
                 <input type="number" step="0.01" class="form-control" id="precio" name="precio">
             </div>
             <div class="form-group">
-                <label for="usuario_id">ID de Usuario (Opcional):</label>
-                <input type="number" class="form-control" id="usuario_id" name="usuario_id">
-            </div>
+    	    <label for="usuario_id">Asignar a Usuario:</label>
+		    <select class="form-control" id="usuario_id" name="usuario_id">
+		        <option value="">Ninguno</option>
+		        <c:forEach var="usuario" items="${usuarios}">
+		            <option value="${usuario.id}">${usuario.nombre} (${usuario.username})</option>
+		        </c:forEach>
+		    </select>
+		</div>
+<br>
             <button type="submit" class="btn btn-primary">Guardar Computador</button>
             <a href="<%= request.getContextPath() %>/usuario/listar_todo" class="btn btn-secondary ml-2">Cancelar</a>
         </form>
