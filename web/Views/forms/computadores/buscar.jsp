@@ -14,7 +14,7 @@
                 <input type="text" class="form-control" id="criterio" name="criterio" placeholder="Ingrese la marca, categoría, etc.">
             </div>
             <button type="submit" class="btn btn-primary">Buscar</button>
-            <a href="<%= request.getContextPath() %>/computadores/listar_todo" class="btn btn-secondary ml-2">Cancelar</a>
+            <a href="<%= request.getContextPath() %>/usuario/listar_todo" class="btn btn-secondary ml-2">Cancelar</a>
         </form>
     </div>
 

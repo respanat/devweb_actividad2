@@ -58,7 +58,7 @@
             <p class="alert alert-info">No se encontraron computadores con el criterio: "${criterio}".</p>
         </c:if>
 
-        <p><a href="<%= request.getContextPath() %>/computadores/listar_todo" class="btn btn-secondary">Volver a la Lista</a></p>
+        <p><a href="<%= request.getContextPath() %>/usuario/listar_todo" class="btn btn-secondary">Volver a la Lista</a></p>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

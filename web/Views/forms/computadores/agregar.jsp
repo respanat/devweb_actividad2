@@ -66,7 +66,7 @@
                 <input type="number" class="form-control" id="usuario_id" name="usuario_id">
             </div>
             <button type="submit" class="btn btn-primary">Guardar Computador</button>
-            <a href="<%= request.getContextPath() %>/computadores/listar_todo" class="btn btn-secondary ml-2">Cancelar</a>
+            <a href="<%= request.getContextPath() %>/usuario/listar_todo" class="btn btn-secondary ml-2">Cancelar</a>
         </form>
     </div>
 

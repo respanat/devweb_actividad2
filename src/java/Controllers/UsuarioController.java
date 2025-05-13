@@ -3,6 +3,8 @@ package Controllers;
 import Models.Entities.Usuario;
 import Models.Repositories.UsuarioRepositoryImpl; // Necesitaremos una implementación del Repository
 import Models.Services.UsuarioService;
+import Models.Entities.Computador;
+import Models.Services.ComputadorService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,12 +18,14 @@ import java.util.List;
 public class UsuarioController extends HttpServlet {
 
     private UsuarioService usuarioService;
+    private ComputadorService computadorService;
 
     // Se instancia el UsuarioService al inicializar el servlet
     @Override
     public void init() throws ServletException {
-        // Por ahora, instanciamos directamente el repositorio. Más adelante usaremos un mecanismo de configuración.
+        // Se instancian los repositorios, para darle orden y atractivo visual también se instancia el repositorio Computador
         usuarioService = new UsuarioService(new UsuarioRepositoryImpl());
+        computadorService = new ComputadorService(); // Instancia el servicio de Computador
     }
 
     // Método para manejar las peticiones GET
@@ -107,9 +111,11 @@ public class UsuarioController extends HttpServlet {
     // Métodos auxiliares para manejar las diferentes acciones
 
     private void listarUsuarios(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	        System.out.println("UsuarioController - Ejecutando listarUsuarios...");
         List<Usuario> usuarios = usuarioService.obtenerTodosLosUsuarios();
-	System.out.println("Número de usuarios obtenidos: " + usuarios.size());
+        List<Computador> computadores = computadorService.obtenerTodosLosComputadores(); // Obtiene la lista de computadores
         request.setAttribute("usuarios", usuarios); // Pasa la lista de usuarios a la vista
+	request.setAttribute("computadores", computadores); // Pasa la lista de computadores a la vista
         request.getRequestDispatcher("/Views/forms/usuarios/listar_todo.jsp").forward(request, response);
     }
 

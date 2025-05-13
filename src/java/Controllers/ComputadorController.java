@@ -106,7 +106,7 @@ public class ComputadorController extends HttpServlet {
 
         Computador computador = new Computador(marca, categoria, marcaCpu, velocidadCpU, tecnologiaRam, capacidadRam, tecnologiaDisco, capacidadDisco, numPuertosUSB, numPuertosHDMI, marcaMonitor, pulgadas, precio, usuario_id);
         computadorService.crearComputador(computador);
-        response.sendRedirect(request.getContextPath() + "/computadores/listar");
+        response.sendRedirect(request.getContextPath() + "/usuario/listar_todo");
     }
 
     private void mostrarFormularioEditar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -139,7 +139,7 @@ public class ComputadorController extends HttpServlet {
 
         Computador computador = new Computador(id, marca, categoria, marcaCpu, velocidadCpU, tecnologiaRam, capacidadRam, tecnologiaDisco, capacidadDisco, numPuertosUSB, numPuertosHDMI, marcaMonitor, pulgadas, precio, usuario_id);
         computadorService.actualizarComputador(computador);
-        response.sendRedirect(request.getContextPath() + "/computadores/listar");
+        response.sendRedirect(request.getContextPath() + "/usuario/listar_todo");
     }
 
     private void eliminarComputador(HttpServletRequest request, HttpServletResponse response) throws IOException {

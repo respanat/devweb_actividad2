@@ -67,7 +67,7 @@ public class ComputadorRepositoryImpl implements ComputadorRepository {
             pstmt.setString(11, computador.getMarcaMonitor());
             pstmt.setDouble(12, computador.getPulgadas());
             pstmt.setDouble(13, computador.getPrecio());
-            pstmt.setObject(14, computador.getUsuario_id()); // Usar setObject para permitir valores null
+            pstmt.setObject(14, computador.getUsuario_id()); // setObject para permitir valores null, ya que un computador puede estar o no asignado
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

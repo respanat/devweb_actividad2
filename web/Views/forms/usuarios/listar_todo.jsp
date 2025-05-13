@@ -38,6 +38,7 @@
                 </c:forEach>
             </tbody>
         </table>
+        <jsp:include page="/Views/forms/computadores/listar_todo.jsp" />
         <p><a href="<%= request.getContextPath() %>/" class="btn btn-secondary">Cerrar Sesión</a></p>
     </div>
 
