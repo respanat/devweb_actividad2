@@ -10,7 +10,9 @@
 <body>
     <div class="container">
         <h1>Lista de Usuarios</h1>
-        <p><a href="<%= request.getContextPath() %>/usuario/agregar" class="btn btn-success">Agregar Nuevo Usuario</a></p>
+        <div style="display: flex; gap: 10px;"> <a href="<%= request.getContextPath() %>/usuario/agregar" class="btn btn-success">Agregar Nuevo Usuario</a>
+	<a href="<%= request.getContextPath() %>/usuario/buscar" class="btn btn-info">Buscar Usuario</a>
+	</div>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -36,7 +38,7 @@
                 </c:forEach>
             </tbody>
         </table>
-        <p><a href="<%= request.getContextPath() %>/" class="btn btn-secondary">Volver al Inicio</a></p>
+        <p><a href="<%= request.getContextPath() %>/" class="btn btn-secondary">Cerrar Sesión</a></p>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

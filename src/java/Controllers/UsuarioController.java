@@ -125,7 +125,7 @@ public class UsuarioController extends HttpServlet {
 
         Usuario nuevoUsuario = new Usuario(0, username, password, nombre, email); // El ID se generará en la BD
         usuarioService.crearUsuario(nuevoUsuario);
-        response.sendRedirect(request.getContextPath() + "/usuario/listar"); // Redirige a la lista de usuarios
+        response.sendRedirect(request.getContextPath() + "/usuario/listar_todo"); // Redirige a la lista de usuarios
     }
 
     private void mostrarFormularioEditar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -144,13 +144,13 @@ public class UsuarioController extends HttpServlet {
 
         Usuario usuarioActualizado = new Usuario(id, username, password, nombre, email);
         usuarioService.actualizarUsuario(usuarioActualizado);
-        response.sendRedirect(request.getContextPath() + "/usuario/listar");
+        response.sendRedirect(request.getContextPath() + "/usuario/listar_todo");
     }
 
     private void eliminarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         usuarioService.eliminarUsuario(id);
-        response.sendRedirect(request.getContextPath() + "/usuario/listar");
+        response.sendRedirect(request.getContextPath() + "/usuario/listar_todo");
     }
 
     private void mostrarFormularioBuscar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -216,8 +216,6 @@ public class UsuarioController extends HttpServlet {
         Usuario usuarioEncontrado = usuarioService.iniciarRecordarPassword(identifier);
 
         if (usuarioEncontrado != null) {
-            // En una aplicación real, aquí se generaría y enviaría un enlace
-            // para restablecer la contraseña al correo electrónico del usuario.
             request.setAttribute("message", "Se ha enviado un enlace para restablecer la contraseña a tu correo electrónico (simulado).");
         } else {
             request.setAttribute("message", "No se encontró ningún usuario con ese nombre de usuario o correo electrónico.");

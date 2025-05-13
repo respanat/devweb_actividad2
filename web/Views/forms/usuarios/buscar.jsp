@@ -15,7 +15,7 @@
                 <input type="text" class="form-control" id="criterio" name="criterio" required>
             </div>
             <button type="submit" class="btn btn-primary">Buscar</button>
-            <a href="<%= request.getContextPath() %>/usuario/listar" class="btn btn-secondary">Volver a la Lista</a>
+            <a href="<%= request.getContextPath() %>/usuario/listar_todo" class="btn btn-secondary">Volver a la Lista</a>
         </form>
     </div>
 

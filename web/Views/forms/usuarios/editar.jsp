@@ -28,7 +28,7 @@
                 <input type="email" class="form-control" id="email" name="email" value="${usuario.email}" required>
             </div>
             <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-            <a href="<%= request.getContextPath() %>/usuario/listar" class="btn btn-secondary">Cancelar</a>
+            <a href="<%= request.getContextPath() %>/usuario/listar_todo" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 

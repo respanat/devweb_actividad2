@@ -24,7 +24,7 @@
             <p class="alert alert-warning">No se encontró ningún usuario con el criterio de búsqueda.</p>
         </c:if>
         <p><a href="<%= request.getContextPath() %>/usuario/buscar" class="btn btn-secondary mt-3">Volver a Buscar</a></p>
-        <p><a href="<%= request.getContextPath() %>/usuario/listar" class="btn btn-secondary mt-3">Volver a la Lista</a></p>
+        <p><a href="<%= request.getContextPath() %>/usuario/listar_todo" class="btn btn-secondary mt-3">Volver a la Lista</a></p>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
