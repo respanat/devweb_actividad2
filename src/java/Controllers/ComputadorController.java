@@ -22,9 +22,8 @@ public class ComputadorController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        //computadorService = new ComputadorService();
-	computadorService = new ComputadorService(new Models.Repositories.ComputadorRepositoryImpl()); // Asegúrate de pasar la implementación
-    usuarioService = new UsuarioService(new UsuarioRepositoryImpl()); // Instancia UsuarioService aquí
+    computadorService = new ComputadorService(new Models.Repositories.ComputadorRepositoryImpl());
+    usuarioService = new UsuarioService(new UsuarioRepositoryImpl());
     }
 
     @Override
@@ -87,14 +86,9 @@ public class ComputadorController extends HttpServlet {
         request.getRequestDispatcher("/Views/forms/computadores/listar_todo.jsp").forward(request, response);
     }
 
-    /*private void mostrarFormularioAgregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/Views/forms/computadores/agregar.jsp").forward(request, response);
-    }*/
-    
     private void mostrarFormularioAgregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     List<Usuario> usuarios = usuarioService.obtenerTodosLosUsuarios();
-        System.out.println("Número de usuarios obtenidos: " + usuarios.size()); // Agrega esta línea
-    request.setAttribute("usuarios", usuarios); // Pasa la lista de usuarios a la vista
+    request.setAttribute("usuarios", usuarios);
     request.getRequestDispatcher("/Views/forms/computadores/agregar.jsp").forward(request, response);
 }
 
@@ -165,12 +159,15 @@ public class ComputadorController extends HttpServlet {
     private void mostrarFormularioBuscar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/Views/forms/computadores/buscar.jsp").forward(request, response);
     }
-
+    
     private void buscarComputador(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String criterio = request.getParameter("criterio");
-        // Aquí deberíamos llamar a un método en el servicio para buscar computadores por criterio
-        // Por ahora, simplemente redirigimos a una página de resultados (que aún no existe)
-        request.setAttribute("criterio", criterio);
-        request.getRequestDispatcher("/Views/forms/computadores/buscar_resultado.jsp").forward(request, response);
-    }
+    String criterio = request.getParameter("criterio");
+    // Llamar al método en el servicio para buscar computadores por criterio
+    List<Computador> computadoresEncontrados = computadorService.buscarComputadoresPorCriterio(criterio);
+    // Almacenar los resultados en el request
+    request.setAttribute("computadoresEncontrados", computadoresEncontrados);
+    request.setAttribute("criterio", criterio);
+    // Redirigir a la página de resultados
+    request.getRequestDispatcher("/Views/forms/computadores/buscar_resultado.jsp").forward(request, response);
+}
 }

@@ -1,7 +1,7 @@
 package Controllers;
 
 import Models.Entities.Usuario;
-import Models.Repositories.UsuarioRepositoryImpl; // Necesitaremos una implementación del Repository
+import Models.Repositories.UsuarioRepositoryImpl;
 import Models.Services.UsuarioService;
 import Models.Entities.Computador;
 import Models.Services.ComputadorService;
@@ -138,7 +138,7 @@ public class UsuarioController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Usuario usuario = usuarioService.obtenerUsuarioPorId(id);
         request.setAttribute("usuario", usuario); // Pasa el usuario a la vista
-        request.getRequestDispatcher("/Views/forms/usuarios/editar.jsp").forward(request, response); // Necesitaremos crear este JSP
+        request.getRequestDispatcher("/Views/forms/usuarios/editar.jsp").forward(request, response);
     }
 
     private void actualizarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -165,9 +165,9 @@ public class UsuarioController extends HttpServlet {
 
     private void buscarUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String criterio = request.getParameter("criterio");
-        Usuario usuarioEncontrado = usuarioService.obtenerUsuarioPorUsername(criterio); // Ejemplo de búsqueda por username
+        Usuario usuarioEncontrado = usuarioService.obtenerUsuarioPorUsername(criterio);
         request.setAttribute("usuarioEncontrado", usuarioEncontrado);
-        request.getRequestDispatcher("/Views/forms/usuarios/buscar_resultado.jsp").forward(request, response); // Necesitaremos crear este JSP
+        request.getRequestDispatcher("/Views/forms/usuarios/buscar_resultado.jsp").forward(request, response);
     }
     private void mostrarFormularioLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/Views/forms/usuarios/login.jsp").forward(request, response);
@@ -176,7 +176,7 @@ public class UsuarioController extends HttpServlet {
     private void procesarLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-	String adminLogin = request.getParameter("adminLogin"); // Obtiene el valor del botón "Administrar"
+	String adminLogin = request.getParameter("adminLogin");
 
 	if (adminLogin != null && adminLogin.equals("true") && username.equals("admin") && password.equals("admin")) {
             // Credenciales de administrador

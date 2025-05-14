@@ -61,19 +61,6 @@
                 <label for="precio">Precio:</label>
                 <input type="number" step="0.01" class="form-control" id="precio" name="precio">
             </div>
-            <!--<div class="form-group">
-                <label for="usuario_id">ID de Usuario (Opcional):</label>
-                <input type="number" class="form-control" id="usuario_id" name="usuario_id">
-            </div>
-	    <div>
-		    <label for="usuario_id">Asignar a Usuario:</label>
-<select name="usuario_id" id="usuario_id">
-    <option value="">Ninguno</option> <c:forEach var="usuario" items="${usuarios}">
-        <option value="${usuario.id}">${usuario.nombre} (${usuario.username})</option>
-    </c:forEach>
-</select>
-<br>
-	    </div>-->
             <button type="submit" class="btn btn-primary">Guardar Computador</button>
             <a href="<%= request.getContextPath() %>/usuario/listar_todo" class="btn btn-secondary ml-2">Cancelar</a>
         </form>

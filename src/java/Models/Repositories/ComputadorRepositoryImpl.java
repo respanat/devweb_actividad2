@@ -130,7 +130,7 @@ public class ComputadorRepositoryImpl implements ComputadorRepository {
                 computadoresEncontrados.add(mapResultSetToComputador(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Log de la excepción en un entorno real
+            e.printStackTrace();
         }
         return computadoresEncontrados;
     }

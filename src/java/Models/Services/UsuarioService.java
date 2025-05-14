@@ -15,7 +15,6 @@ public class UsuarioService {
 
     // Método para crear un nuevo usuario, invoca el método correspondiente del repositorio
     public void crearUsuario(Usuario usuario) {
-        // Aquí se podrían agregar validaciones de negocio antes de guardar
         usuarioRepository.crear(usuario);
     }
 
@@ -25,9 +24,6 @@ public class UsuarioService {
     }
 
     // Método para obtener todos los usuarios, invoca el método del repositorio
-    /*public List<Usuario> obtenerTodosLosUsuarios() {
-        return usuarioRepository.obtenerTodos();
-    }*/
     public List<Usuario> obtenerTodosLosUsuarios() {
     List<Usuario> usuarios = usuarioRepository.obtenerTodos();
     System.out.println("UsuarioService - Número de usuarios obtenidos del repositorio: " + usuarios.size());
@@ -36,13 +32,11 @@ public class UsuarioService {
 
     // Método para actualizar la información de un usuario, invoca el método del repositorio
     public void actualizarUsuario(Usuario usuario) {
-        // Aquí se podrían agregar validaciones de negocio antes de actualizar
         usuarioRepository.actualizar(usuario);
     }
 
     // Método para eliminar un usuario por su ID, invoca el método del repositorio
     public void eliminarUsuario(int id) {
-        // Aquí se podrían agregar validaciones de negocio antes de eliminar
         usuarioRepository.eliminar(id);
     }
 
@@ -71,8 +65,6 @@ public class UsuarioService {
         if (usuario == null) {
             usuario = usuarioRepository.obtenerPorEmail(identifier);
         }
-        // En una aplicación real, aquí se enviaría un correo electrónico
-        // con un enlace para restablecer la contraseña.
         return usuario; // Devolvemos el usuario encontrado (o null si no se encuentra)
     }
 }
