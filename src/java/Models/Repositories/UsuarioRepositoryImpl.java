@@ -8,12 +8,11 @@ import java.util.List;
 public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     // Información de la conexión a la base de datos
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/act2_devweb?serverTimezone=America/Bogota"; // Ajusta la zona horaria si es necesario
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/act2_devweb?serverTimezone=America/Bogota"; 
     private static final String JDBC_USER = "ramiro_espana";
     private static final String JDBC_PASSWORD = "AbcdeUdeC";
 
     // Método para obtener una conexión a la base de datos
-    //private Connection getConnection() throws SQLException {
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
     }
@@ -144,7 +143,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 );
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Log de errores
+            e.printStackTrace();
         }
         return usuario;
     }

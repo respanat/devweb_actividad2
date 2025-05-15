@@ -34,7 +34,6 @@ public class UsuarioController extends HttpServlet {
         String pathInfo = request.getPathInfo(); // Obtiene la parte de la URL después de "/usuario"
 
         if (pathInfo == null || pathInfo.equals("/")) {
-            // Acción por defecto: podría ser listar todos los usuarios o mostrar un formulario de inicio
             listarUsuarios(request, response);
         } else {
             String[] pathParts = pathInfo.substring(1).split("/"); // Divide la ruta en partes
@@ -62,7 +61,7 @@ public class UsuarioController extends HttpServlet {
 		case "recordar_password":
                     mostrarFormularioRecordarPassword(request, response);
                     break;
-		case "listar": // Para mostrar los detalles del usuario logueado
+		case "listar": 
                     mostrarDetallesUsuario(request, response);
                     break;
                 case "logout":
