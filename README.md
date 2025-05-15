@@ -17,3 +17,7 @@ Despliegue normal de la aplicación:
 5. Hacer Run
 6. Accesos de prueba: usuario::contraseña >> test0::test0  | admin::admin . Un usuario administrador para la gestión del CRUD.
 7. Entrada administración: Digitar Usuario y contraseña y dar clic en botón Administrar.
+8. En el caso de errores de ejecución por librerías se adjuntan en el proyecto aunque sería un caso bastante extraño
+   mysql-connector-j-9.0.1.jar
+   jakarta EE 10 API Library - jakarta.jakartaee-api-10.0.0.jar
+   jakarta.servlet.jsp.jstl-3.0.1.jar
